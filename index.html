@@ -310,9 +310,19 @@
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, doc, updateDoc, deleteDoc, writeBatch, getDocs, where, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Global variables from the environment
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        // --- KONFIGURASI FIREBASE ANDA ---
+        // Konfigurasi dari proyek cs11-ashqaf-db
+        const firebaseConfig = {
+            apiKey: "AIzaSyAIxCGOEFBw8z0iWRX8peZXncCRf3tiqBE",
+            authDomain: "cs11-ashqaf-db.firebaseapp.com",
+            projectId: "cs11-ashqaf-db",
+            storageBucket: "cs11-ashqaf-db.firebasestorage.app",
+            messagingSenderId: "198364161055",
+            appId: "1:198364161055:web:2ade34d805bc57a313a12a"
+        };
+
+        // ID unik untuk memisahkan data (bisa dibiarkan atau diganti)
+        const appId = 'cs11-ashqaf-database';
 
         // PWA Setup (Manifest Injection)
         const setupPWA = () => {
@@ -3395,11 +3405,8 @@ ${csName || 'Admin'}
         async function initializeAppWithAuth() {
             const authIconStatus = document.getElementById('auth-icon-status');
             try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
+                // Menggunakan login anonim untuk mode tim (pastikan "Anonymous" diaktifkan di Firebase Auth)
+                await signInAnonymously(auth);
 
                 onAuthStateChanged(auth, async (user) => {
                     if (user) {
